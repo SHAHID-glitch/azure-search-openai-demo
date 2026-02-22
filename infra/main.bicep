@@ -195,7 +195,17 @@ param documentIntelligenceResourceGroupName string = '' // Set in main.parameter
 // Limited regions for new version:
 // https://learn.microsoft.com/azure/ai-services/document-intelligence/concept-layout
 @description('Location for the Document Intelligence resource group')
-@allowed(['eastus', 'westus2', 'westeurope', 'australiaeast'])
+@allowed([
+  'eastus'
+  'westus2'
+  'westeurope'
+  'australiaeast'
+  'centralindia'
+  'eastasia'
+  'southeastasia'
+  'uaenorth'
+  'austriaeast'
+])
 @metadata({
   azd: {
     type: 'location'

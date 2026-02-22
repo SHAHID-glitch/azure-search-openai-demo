@@ -65,6 +65,8 @@ class ChatReadRetrieveReadApproach(Approach):
         use_web_source: bool = False,
         use_sharepoint_source: bool = False,
         retrieval_reasoning_effort: Optional[str] = None,
+        rag_search_text_embeddings: bool = True,
+        rag_search_image_embeddings: bool = True,
     ):
         self.search_client = search_client
         self.search_index_name = search_index_name
@@ -97,6 +99,8 @@ class ChatReadRetrieveReadApproach(Approach):
         self.web_source_enabled = use_web_source
         self.use_sharepoint_source = use_sharepoint_source
         self.retrieval_reasoning_effort = retrieval_reasoning_effort
+        self.rag_search_text_embeddings = rag_search_text_embeddings
+        self.rag_search_image_embeddings = rag_search_image_embeddings
 
     def extract_followup_questions(self, content: Optional[str]):
         if content is None:
@@ -350,9 +354,10 @@ class ChatReadRetrieveReadApproach(Approach):
         access_token = auth_claims.get("access_token")
         send_text_sources = overrides.get("send_text_sources", True)
         send_image_sources = overrides.get("send_image_sources", self.multimodal_enabled) and self.multimodal_enabled
-        search_text_embeddings = overrides.get("search_text_embeddings", True)
+        search_text_embeddings = overrides.get("search_text_embeddings", self.rag_search_text_embeddings)
         search_image_embeddings = (
-            overrides.get("search_image_embeddings", self.multimodal_enabled) and self.multimodal_enabled
+            overrides.get("search_image_embeddings", self.rag_search_image_embeddings and self.multimodal_enabled)
+            and self.multimodal_enabled
         )
 
         original_user_query = messages[-1]["content"]

@@ -707,14 +707,14 @@ async def setup_clients():
         search_client=search_client,
         search_index_name=AZURE_SEARCH_INDEX,
         knowledgebase_model=AZURE_OPENAI_KNOWLEDGEBASE_MODEL,
-        knowledgebase_deployment=AZURE_OPENAI_KNOWLEDGEBASE_DEPLOYMENT,
+        knowledgebase_deployment=AZURE_OPENAI_KNOWLEDGEBASE_DEPLOYMENT if OPENAI_HOST == OpenAIHost.AZURE else None,
         knowledgebase_client=knowledgebase_client,
         knowledgebase_client_with_web=knowledgebase_client_with_web,
         knowledgebase_client_with_sharepoint=knowledgebase_client_with_sharepoint,
         knowledgebase_client_with_web_and_sharepoint=knowledgebase_client_with_web_and_sharepoint,
         openai_client=openai_client,
         chatgpt_model=OPENAI_CHATGPT_MODEL,
-        chatgpt_deployment=AZURE_OPENAI_CHATGPT_DEPLOYMENT,
+        chatgpt_deployment=AZURE_OPENAI_CHATGPT_DEPLOYMENT if OPENAI_HOST == OpenAIHost.AZURE else None,
         embedding_model=OPENAI_EMB_MODEL,
         embedding_deployment=AZURE_OPENAI_EMB_DEPLOYMENT,
         embedding_dimensions=OPENAI_EMB_DIMENSIONS,
@@ -732,6 +732,8 @@ async def setup_clients():
         use_web_source=current_app.config[CONFIG_WEB_SOURCE_ENABLED],
         use_sharepoint_source=current_app.config[CONFIG_SHAREPOINT_SOURCE_ENABLED],
         retrieval_reasoning_effort=AGENTIC_KNOWLEDGEBASE_REASONING_EFFORT,
+        rag_search_text_embeddings=RAG_SEARCH_TEXT_EMBEDDINGS,
+        rag_search_image_embeddings=RAG_SEARCH_IMAGE_EMBEDDINGS,
     )
 
 
